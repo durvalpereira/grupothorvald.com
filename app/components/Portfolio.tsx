@@ -7,73 +7,79 @@ interface Company {
   segment: string
   url: string | null
   status: 'active' | 'exit'
-  icon: string
-  featured?: boolean
+  emoji: string
+  gradient: string
+  className: string
 }
 
 const companies: Company[] = [
   {
     name: 'Bigu Tech',
     description:
-      'Software house com clientes em 6 continentes. Desenvolvimento de sistemas e soluções digitais inteligentes para negócios de todos os tamanhos.',
+      'Software house com clientes em 6 continentes. Sistemas e soluções digitais inteligentes.',
     segment: 'Tecnologia',
     url: 'https://bigutech.com.br',
     status: 'active',
-    icon: '💻',
-    featured: true,
+    emoji: '💻',
+    gradient: 'bg-[linear-gradient(135deg,#0C4339_0%,var(--color-teal-700)_50%,var(--color-teal-500)_100%)]',
+    className: 'col-span-2 row-span-2',
   },
   {
     name: 'Sua Carreira Tech',
     description:
-      'Programa de mentoria para profissionais de tecnologia que querem ir além do código e construir carreiras e negócios rentáveis.',
+      'Mentoria para profissionais tech que querem ir além do código.',
     segment: 'Educação',
     url: 'https://suacarreiratech.com.br',
     status: 'active',
-    icon: '🎓',
-    featured: true,
+    emoji: '🎓',
+    gradient: 'bg-[linear-gradient(135deg,var(--color-navy-800)_0%,#1a3a5c_50%,var(--color-teal-800)_100%)]',
+    className: 'col-span-2',
   },
   {
     name: 'Hostu',
-    description:
-      'Hospedagem web e cloud computing para empresas de todos os tamanhos.',
+    description: 'Hospedagem web e cloud computing.',
     segment: 'Infraestrutura',
     url: 'https://hostu.info',
     status: 'active',
-    icon: '☁️',
+    emoji: '☁️',
+    gradient: 'bg-[linear-gradient(135deg,var(--color-teal-600)_0%,var(--color-teal-400)_100%)]',
+    className: '',
   },
   {
     name: 'Geral.ink',
-    description:
-      'Plataforma de links e cartão digital de visitas para profissionais e empresas.',
+    description: 'Links e cartão digital de visitas.',
     segment: 'SaaS',
     url: 'https://geral.ink',
     status: 'active',
-    icon: '🔗',
+    emoji: '🔗',
+    gradient: 'bg-[linear-gradient(135deg,var(--color-teal-800)_0%,var(--color-teal-600)_100%)]',
+    className: '',
   },
   {
     name: 'QuantoGastei',
     description:
-      'Startup de finanças pessoais premiada pelo Inovativa Brasil e Samsung. +R$400k em investimento.',
+      'Startup premiada pelo Inovativa Brasil e Samsung. +R$400k captados.',
     segment: 'Fintech',
     url: null,
     status: 'exit',
-    icon: '💰',
+    emoji: '💰',
+    gradient: 'bg-[linear-gradient(135deg,var(--color-navy-900)_0%,var(--color-navy-800)_50%,#1a3050_100%)]',
+    className: 'md:col-span-2',
   },
   {
     name: 'Outras Participações',
     description:
-      'Sociedades minoritárias em negócios físicos no Nordeste: suplementos, gastronomia, automotivo e mais.',
+      'Sociedades em negócios físicos no Nordeste: suplementos, gastronomia e mais.',
     segment: 'Diversificado',
     url: null,
     status: 'active',
-    icon: '🏢',
+    emoji: '🏢',
+    gradient: 'bg-[linear-gradient(135deg,var(--color-teal-700)_0%,var(--color-teal-500)_100%)]',
+    className: 'md:col-span-2',
   },
 ]
 
 export default function Portfolio() {
-  const featured = companies.filter((c) => c.featured)
-  const others = companies.filter((c) => !c.featured)
-
   return (
     <section id="empresas" className="py-24 md:py-32 bg-surface scroll-mt-20">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -83,122 +89,95 @@ export default function Portfolio() {
           </p>
         </ScrollReveal>
 
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
           <ScrollReveal delay={100}>
             <h2 className="font-heading text-4xl md:text-5xl text-navy-800">
               Nossas Empresas
             </h2>
           </ScrollReveal>
           <ScrollReveal delay={200}>
-            <p className="text-navy-400 text-lg max-w-lg">
-              Negócios em diferentes setores, unidos pela visão de usar
-              tecnologia como motor de crescimento.
+            <p className="text-navy-400 text-lg max-w-md">
+              Negócios em diferentes setores, unidos por tecnologia como motor
+              de crescimento.
             </p>
           </ScrollReveal>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 mb-6">
-          {featured.map((company, i) => (
-            <ScrollReveal key={company.name} delay={i * 100}>
-              <FeaturedCard company={company} />
-            </ScrollReveal>
-          ))}
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {others.map((company, i) => (
-            <ScrollReveal key={company.name} delay={i * 100}>
-              <CompactCard company={company} />
-            </ScrollReveal>
-          ))}
-        </div>
+        <ScrollReveal delay={300}>
+          <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[150px] sm:auto-rows-[170px] md:auto-rows-[190px] gap-3 md:gap-4">
+            {companies.map((company) => (
+              <BentoCard key={company.name} company={company} />
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )
 }
 
-function FeaturedCard({ company }: { company: Company }) {
-  const content = (
-    <div className="group h-full bg-white rounded-2xl border border-border overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-teal-300 hover:-translate-y-1">
-      <div className="h-1.5 bg-teal-500" />
-      <div className="p-6 md:p-8 lg:p-10">
-        <div className="flex items-start justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <span className="text-3xl">{company.icon}</span>
-            <span className="text-xs font-semibold text-teal-700 bg-teal-50 px-3 py-1 rounded-full uppercase tracking-wide">
-              {company.segment}
-            </span>
-          </div>
-          {company.url && (
-            <ArrowUpRight
-              size={20}
-              className="text-navy-300 group-hover:text-teal-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
-            />
-          )}
-        </div>
+function BentoCard({ company }: { company: Company }) {
+  const isLarge = company.className.includes('row-span-2')
 
-        <h3 className="font-heading text-2xl md:text-3xl text-navy-800 mb-3 group-hover:text-teal-700 transition-colors">
-          {company.name}
-        </h3>
+  const inner = (
+    <>
+      <span className="absolute -bottom-6 -right-4 text-[7rem] sm:text-[8rem] leading-none opacity-[0.08] select-none pointer-events-none">
+        {company.emoji}
+      </span>
 
-        <p className="text-navy-400 leading-relaxed">{company.description}</p>
-      </div>
-    </div>
-  )
-
-  if (company.url) {
-    return (
-      <a href={company.url} target="_blank" rel="noopener noreferrer" className="block h-full">
-        {content}
-      </a>
-    )
-  }
-  return content
-}
-
-function CompactCard({ company }: { company: Company }) {
-  const content = (
-    <div className="group h-full bg-white rounded-xl border border-border p-6 transition-all duration-300 hover:shadow-lg hover:border-teal-300 hover:-translate-y-1">
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-2xl">{company.icon}</span>
+      <div className="relative z-10 flex items-start justify-between">
+        <span className="bg-white/15 backdrop-blur-sm text-white text-[10px] sm:text-xs font-semibold tracking-wide uppercase px-3 py-1 rounded-full border border-white/10">
+          {company.segment}
+        </span>
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-semibold text-navy-300 uppercase tracking-wider">
-            {company.segment}
-          </span>
           {company.status === 'exit' && (
-            <span className="text-[10px] font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full uppercase">
+            <span className="bg-white/10 text-white/70 text-[10px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full">
               Exit
             </span>
           )}
+          {company.url && (
+            <ArrowUpRight
+              size={16}
+              className="text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+            />
+          )}
         </div>
       </div>
 
-      <h3 className="font-heading text-xl text-navy-800 mb-2 group-hover:text-teal-700 transition-colors">
-        {company.name}
-      </h3>
-
-      <p className="text-navy-400 text-sm leading-relaxed">
-        {company.description}
-      </p>
-
-      {company.url && (
-        <div className="flex items-center gap-1 text-teal-600 text-sm font-medium mt-4">
-          Visitar
-          <ArrowUpRight
-            size={14}
-            className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-          />
-        </div>
-      )}
-    </div>
+      <div className="relative z-10">
+        <h3
+          className={`font-heading text-white mb-1 ${
+            isLarge
+              ? 'text-2xl sm:text-3xl md:text-4xl'
+              : 'text-lg sm:text-xl md:text-2xl'
+          }`}
+        >
+          {company.name}
+        </h3>
+        <p
+          className={`text-white/55 leading-relaxed ${
+            isLarge ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'
+          }`}
+        >
+          {company.description}
+        </p>
+      </div>
+    </>
   )
+
+  const cardClasses = `group relative h-full overflow-hidden rounded-2xl ${company.gradient} p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:-translate-y-0.5 ${company.className}`
 
   if (company.url) {
     return (
-      <a href={company.url} target="_blank" rel="noopener noreferrer" className="block h-full">
-        {content}
+      <a
+        href={company.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cardClasses}
+      >
+        {inner}
       </a>
     )
   }
-  return <div className="h-full">{content}</div>
+
+  return <div className={cardClasses}>{inner}</div>
 }

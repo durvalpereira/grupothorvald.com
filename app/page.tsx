@@ -6,6 +6,7 @@ import Portfolio from './components/Portfolio'
 import Quote from './components/Quote'
 import Leadership from './components/Leadership'
 import Contact from './components/Contact'
+import FAQ from './components/FAQ'
 import Footer from './components/Footer'
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
         <Quote />
         <Leadership />
         <Contact />
+        <FAQ />
       </main>
       <Footer />
     </>
